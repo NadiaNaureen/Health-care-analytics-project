@@ -1,0 +1,3 @@
+profile,egfr,acr,systolic_bp,diastolic_bp,hba1c,age,bmi,diabetes,hypertension,smoking
+Stage 1 High-Risk,92,220,162,98,8.6,68,33.5,true,true,true
+Stage 2 Patient,72,90,148,92,6.9,62,29,false,true,false

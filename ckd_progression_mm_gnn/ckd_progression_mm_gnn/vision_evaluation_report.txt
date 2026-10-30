@@ -1,0 +1,37 @@
+CONVNEXT-TINY STANDALONE STAGE CLASSIFIER EVALUATION REPORT (REGULARIZED)
+===========================================================================
+
+Training Set Class Counts & Imbalance:
+  Stage 1: 267 scans (31.9%), weight = 0.7713
+  Stage 2: 140 scans (16.7%), weight = 1.0652
+  Stage 3: 154 scans (18.4%), weight = 1.0156
+  Stage 4: 145 scans (17.3%), weight = 1.0467
+  Stage 5: 131 scans (15.7%), weight = 1.1012
+
+Optimal Early-Stopped Epoch: 14
+Train Accuracy: 66.51%
+Held-Out Validation Accuracy: 50.00%
+Generalization Gap: 16.51% (Target: 10-15%)
+Macro-Averaged F1 Score: 0.5074
+
+5x5 Confusion Matrix:
+True Stage \ Pred  |   Stage 1   Stage 2   Stage 3   Stage 4   Stage 5
+Stage 1            |        35        23         7         1         1
+Stage 2            |        18        10         6         1         0
+Stage 3            |        10         5        18         4         2
+Stage 4            |         1         1         6        23         5
+Stage 5            |         2         4         5         3        19
+
+Classification Report:
+              precision    recall  f1-score   support
+
+     Stage 1     0.5303    0.5224    0.5263        67
+     Stage 2     0.2326    0.2857    0.2564        35
+     Stage 3     0.4286    0.4615    0.4444        39
+     Stage 4     0.7188    0.6389    0.6765        36
+     Stage 5     0.7037    0.5758    0.6333        33
+
+    accuracy                         0.5000       210
+   macro avg     0.5228    0.4969    0.5074       210
+weighted avg     0.5213    0.5000    0.5087       210
+

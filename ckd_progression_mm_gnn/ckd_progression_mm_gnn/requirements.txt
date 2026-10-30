@@ -1,0 +1,12 @@
+torch
+torch_geometric
+pandas
+numpy
+scikit-learn
+lifelines
+matplotlib
+streamlit
+torchvision
+pillow
+seaborn
+python-pptx

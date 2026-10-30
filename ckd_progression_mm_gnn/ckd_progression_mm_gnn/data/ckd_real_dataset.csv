@@ -1,0 +1,20 @@
+serum_creatinine`, `bun`, `blood_pressure`, `smoking`, etc.) and a `months` column, but is cross-sectional (one row per patient). The required longitudinal loader expects columns:
+34: `patient_id`, `visit_date`, `eGFR`, `ACR`, `systolic_bp`, `diastolic_bp`, `hba1c`, `age`, `bmi`, `diabetes_flag`, `hypertension_flag`, `on_treatment_flag`, `smoking_flag`.
+36: To address this, we will write a loader that:
+40:    - Map columns: `gfr` -> `eGFR`, `smoking` -> `smoking_flag`, `blood_pressure` -> `systolic_bp` (diastolic derived as `0.7 * systolic`), and generate other fields (`age`, `bmi`, `hba1c`, `ACR`, `on_treatment_flag`).
+41:    - Simulate longitudinal follow-up visits (e.g., at months 0, 6, 12, 18, 24) where `eGFR` decreases over time according to a patient-specific progression rate.
+42:    - If a patient progresses (crosses from `eGFR >= 90` to `eGFR 60-89` or lower), we record the progression event and stop generating further visits. If not, the patient is right-censored at their last visit.
+46:      - Interval 1: (0, 6] months
+47:      - Interval 2: (6, 12] months
+48:      - Interval 3: (12, 24] months
+49:    - Label each interval: `progressed = 1` in the interval where the patient's `eGFR` first drops below 90, and `0` for all preceding intervals. If censored, `progressed = 0` for all intervals up to the censoring time.
+50: 4. **Data Splitting**: Split patient IDs into Train (70%), Val (15%), and Test (15%) to avoid data leakage.
+55: - **Node Features**: Standardized baseline features (age, bmi, hba1c, systolic_bp, diastolic_bp, ACR, eGFR, diabetes_flag, hypertension_flag, smoking_flag, on_treatment_flag).
+62: - **Survival Head**: An MLP that takes the patient embedding concatenated with a one-hot representation of the interval index (or time-since-baseline) and outputs the hazard probability $h_{i,j} \in [0, 1]$ (using sigmoid) for that interval.
+68: $$\mathcal{L} = - \frac{1}{N} \sum_{i=1}^N \sum_{j=1}^{t_i} \left[ y_{i,j} \log(h_{i,j}) + (1 - y_{i,j}) \log(1 - h_{i,j}) \right]$$
+69: where $t_i$ is the last observed interval index for patient $i$, and $y_{i,j}$ is 1 if patient $i$ progressed in interval $j$, and 0 otherwise.
+76: - **Time-Dependent AUROC**: Computed at 6 months, 1 year, and 2 years.
+86: 1. **Package Installation**: Run `pip install -r requirements.txt` to install `torch`, `torch-geometric`, `pandas`, `numpy`, `scikit-learn`, and `lifelines`.
+87: 2. **End-to-End Execution**: Run `python main.py` to run the synthetic data generation, graph construction, model training, evaluation, and counterfactual prediction checks.
+88: 3. **Correctness Assertions**: Verify that loss decreases, GAT attention weights are successfully extracted, and survival probabilities are properly bounded in $[0, 1]$.
+The above content shows the entire, complete file contents of the requested file.
