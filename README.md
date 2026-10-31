@@ -1,6 +1,5 @@
 # Healthcare Analytics Project — imported working project
 
-The original project has been copied into this directory. The source folder was not edited. See IMPORT_MANIFEST.json for SHA-256 hashes of all 930 imported files. Virtual environments, Python bytecode, pytest caches and Git metadata were excluded; create a fresh environment below.
 
 ## Setup and demonstration (Windows PowerShell)
 
